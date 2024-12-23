@@ -1,15 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-m=50
-T=0.2
+m=7
+T=4
 O=10000
 
-b0=[1,1,1,1,1,1,1,1,1]
+b0=[1,0,0,0,0]
 
 def roundt(dt):
     scale=10**(1-int(np.log10(dt)))
-    return round(dt*scale,1)/scale
+    return round(round(dt*scale,1)/scale,15)
 
 steps=int(O/len(b0))
 dt=roundt(T/steps)
@@ -50,10 +50,11 @@ def plotcoeffs(b):
     t=[dt*j for j in range(steps+1)]
     for i,bi in enumerate(b):
         plt.plot(t,bi,label=f"b{i+1}")
-        plt.legend(loc='center right')
-        plt.xlabel("time(s)")
-        plt.title(f"m={m}, dt={dt}s")
-        plt.tight_layout()
+    plt.legend(loc='center right')
+    plt.xlabel("time(s)")
+    plt.title(f"m={m}, dt={dt}s")
+    plt.tight_layout()
+    #plt.savefig(f"Simulations\m={m}, b0={b0}.png")
 
 A0=b0toA0(b0)
 A=simulate(A0,T,steps)
